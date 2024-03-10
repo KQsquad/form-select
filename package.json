@@ -1,6 +1,6 @@
 {
   "name": "@kq-squad/select",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -25,7 +25,12 @@
   },
   "author": "KQSquad",
   "homepage": "https://github.com/KQsquad/form-select.git#readme",
-  "keywords": ["select", "vanilla", "typescript", "ajax"],
+  "keywords": [
+    "select",
+    "vanilla",
+    "typescript",
+    "ajax"
+  ],
   "main": "./dist/select.cjs.js",
   "module": "./dist/select.js",
   "types": "./dist/select.d.ts",
