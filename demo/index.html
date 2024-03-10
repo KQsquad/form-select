@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + TS</title>
+    <style>
+      .select {
+        padding: 20px;
+      }
+
+      .select label {
+        margin-bottom: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div class="select">
+        <label for="multiple">Multiple (Local options)</label>
+        <select multiple name="multiple" id="multiple">
+          <option value="red" selected>Красный</option>
+          <option value="blue">Голубой</option>
+          <option value="yellow">Жёлтый</option>
+          <option value="violet">Фиолетовый</option>
+          <option value="green" selected>Зелёный</option>
+        </select>
+      </div>
+      <div class="select">
+        <label for="multiple-fetch">Multiple (Fetch options)</label>
+        <select multiple name="multiple-fetch" id="multiple-fetch">
+          <option value="2" selected>qui est esse</option>
+        </select>
+      </div>
+      <div class="select">
+        <label for="multiple-ajax">Multiple (Fetch options)</label>
+        <select multiple name="multiple-ajax" id="multiple-ajax">
+          <option value="2" selected>qui est esse</option>
+        </select>
+      </div>
+      <div class="select">
+        <label for="single">Single (Local options)</label>
+        <select name="single" id="single">
+          <option value="1" selected>Red hat is dead</option>
+          <option value="2">Red woman in matrix</option>
+        </select>
+      </div>
+      <div class="select">
+        <label for="single-fetch">Single (Start fetch)</label>
+        <select name="single-fetch" id="single-fetch"></select>
+      </div>
+      <div class="select">
+        <label for="single-ajax">Single (Ajax search)</label>
+        <select name="single-ajax" id="single-ajax"></select>
+      </div>
+    </div>
+    <script type="module" src="/demo/index.js"></script>
+  </body>
+</html>

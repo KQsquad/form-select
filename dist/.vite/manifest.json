@@ -1,0 +1,11 @@
+{
+  "lib/main.ts": {
+    "file": "select.umd.cjs",
+    "src": "lib/main.ts",
+    "isEntry": true
+  },
+  "style.css": {
+    "file": "style.css",
+    "src": "style.css"
+  }
+}

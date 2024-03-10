@@ -1,0 +1,39 @@
+{
+  "name": "@form/select",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "lodash-es": "^4.17.21",
+    "query-string": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/lodash-es": "^4.17.12",
+    "@types/node": "^20.11.24",
+    "sass": "^1.71.1",
+    "typescript": "^5.2.2",
+    "vite": "^5.1.4",
+    "vite-plugin-dts": "^3.7.3"
+  },
+  "keywords": ["select", "vanilla", "typescript", "ajax"],
+  "main": "./dist/select.cjs.js",
+  "module": "./dist/select.js",
+  "types": "./dist/select.d.ts",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/select.js",
+      "require": "./dist/select.cjs.js"
+    },
+    "./style.css": {
+      "import": "./dist/style.css"
+    }
+  }
+}

@@ -1,0 +1,245 @@
+@use 'mixins' as m;
+@import "vars";
+
+.f-select {
+  $b: &;
+  $border: 1px solid var(--f-select-c-primary);
+  position: relative;
+  width: 100%;
+  //max-width: 320px;
+  box-sizing: border-box;
+
+  font-family: var(--f-select-font-family);
+  font-size: var(--f-select-font-size);
+  color: var(--f-select-c-black);
+
+  @mixin _mod($selector, $mod) {
+    @include m.use-mod($b, $selector, $mod) { @content }
+  }
+
+  @mixin opened($selector) {
+    @include _mod($selector, 'opened') { @content }
+  }
+
+  @mixin loading($selector) {
+    @include _mod($selector, 'loading') { @content }
+  }
+
+  @mixin hint($selector) {
+    @include _mod($selector, 'hint') { @content }
+  }
+
+  @mixin filled($selector) {
+    @include _mod($selector, 'filled') { @content }
+  }
+
+  * {
+    box-sizing: border-box;
+    font: inherit;
+  }
+
+  select {
+    display: none !important;
+  }
+
+  &__inner {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    min-height: 54px;
+    width: 100%;
+    border: $border;
+    border-radius: 8px;
+    cursor: text;
+    background-color: var(--f-select-c-bg);
+
+    @include opened(&) {
+      outline: 1px solid var(--f-select-c-primary);
+    }
+  }
+
+  &__search {
+    width: 100%;
+    padding: 0;
+    border: none;
+    outline: none;
+    font-family: inherit;
+    background-color: transparent;
+
+    &::placeholder {
+      font-family: inherit;
+    }
+
+    @include filled(&) {
+      &::placeholder {
+        color: var(--f-select-c-primary);
+      }
+    }
+  }
+
+  &__dropdown {
+    display: none;
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    bottom: -8px;
+    width: 100%;
+    background-color: var(--f-select-c-bg);
+    transform: translateY(100%);
+    padding: 8px 0;
+    border: 1px solid var(--f-select-c-primary__light);
+    border-radius: 8px;
+
+    @include opened(&) {
+      display: block;
+    }
+
+    @include loading(&) {
+      padding: 0;
+      $gap: 16px;
+
+      &:before, &:after {
+        content: '';
+        @include m.bone-loader-die
+      }
+
+      &:before {
+        margin-bottom: $gap;
+      }
+
+      &:after {
+        margin-top: $gap;
+      }
+    }
+  }
+
+  &__list {
+    width: 100%;
+    max-height: 180px;
+    overflow-y: auto;
+
+    @include loading(&) {
+      display: none;
+    }
+  }
+
+  &__hint {
+    display: none;
+    padding: 4px 16px;
+    width: 100%;
+    max-width: 200px;
+    margin: 0 auto;
+    opacity: 0.5;
+    text-align: center;
+    line-height: 1.5;
+
+    @include hint(&) {
+      display: block;
+    }
+
+    @include loading(&) {
+      @include m.bone-loader-die;
+      font-size: 0;
+    }
+  }
+
+  &__input-area {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  &__clear, &__toggle {
+    padding: 0;
+    margin: 0;
+    border: none;
+    background-color: transparent;
+    font-size: 0;
+    width: 24px;
+    height: 24px;
+
+    @include m.use-focus-outline;
+  }
+
+  &__clear {
+    display: none;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+
+    @include filled(&) {
+      display: flex;
+    }
+
+    &:before, &:after {
+      position: absolute;
+      content: '';
+      width: 10px;
+      height: 2px;
+      background-color: var(--f-select-c-primary);
+    }
+
+    &:before {
+      transform: rotate(45deg);
+    }
+
+    &:after {
+      transform: rotate(-45deg);
+    }
+  }
+
+  &__toggle {
+    position: relative;
+    transition: var(--f-select-transition-time) transform;
+
+    @include opened(&) {
+      transform: rotate(180deg);
+    }
+
+    &:after {
+      position: absolute;
+      content: "";
+      display: block;
+      width: 9px;
+      height: 9px;
+      border-bottom: 2px solid var(--f-select-c-primary);
+      border-right: 2px solid var(--f-select-c-primary);
+      transform: translate(-50%, -50%) rotate(45deg);
+      left: 50%;
+      top: calc(50% - 3px);
+    }
+  }
+
+  &__option {
+    cursor: pointer;
+    padding: 8px 12px;
+    text-align: left;
+
+    transition:
+        var(--f-select-transition-time) background-color,
+        var(--f-select-transition-time) color;
+
+    &._selected {
+      background-color: var(--f-select-c-primary__light);
+      color: var(--f-select-c-black);
+    }
+
+    &._active {
+      background-color: var(--f-select-c-primary);
+      color: var(--f-select-c-white);
+    }
+
+    &:active {
+      background-color: var(--f-select-c-primary__dark);
+      color: var(--f-select-c-white);
+    }
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+  }
+}

@@ -1,0 +1,52 @@
+@mixin use-mod($root, $selector, $mod) {
+  @at-root {
+    #{$root}._#{$mod} #{$selector} {
+      @content
+    }
+  }
+}
+
+@mixin use-focus-outline() {
+  &:focus-visible {
+    outline: 2px solid var(--f-select-c-primary);
+    border-radius: 2px;
+  }
+}
+
+@mixin bone-loader-die() {
+  $width: 160px;
+  $height: 20px;
+  $bone-width: 80px;
+  $base-color: #ddd;
+  $bone-color: #e8e8e8;
+  $animation-duration: 1s;
+
+  display: block;
+
+  width: calc(100% - 40px);
+  max-width: $width;
+  height: $height;
+
+  border-radius: 4px;
+  opacity: 0.6;
+  margin: 16px;
+
+  background: linear-gradient(
+    90deg,
+    $base-color 0px,
+    $bone-color calc($bone-width / 2),
+    $base-color $bone-width
+  ) $base-color no-repeat;
+
+  animation: shine-avatar $animation-duration infinite linear;
+
+  @keyframes shine-avatar {
+    0% {
+      background-position: -$bone-width
+    }
+
+    100% {
+      background-position: $width
+    }
+  }
+}
