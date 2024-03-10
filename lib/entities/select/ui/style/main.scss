@@ -3,7 +3,6 @@
 
 .f-select {
   $b: &;
-  $border: 1px solid var(--f-select-c-primary);
   position: relative;
   width: 100%;
   //max-width: 320px;
@@ -47,10 +46,10 @@
     display: flex;
     align-items: center;
     padding: 12px 16px;
-    min-height: 54px;
+    min-height: var(--f-select-min-height);
     width: 100%;
-    border: $border;
-    border-radius: 8px;
+    border: 1px solid var(--f-select-c-primary__light);
+    border-radius: var(--f-select-border-radius);
     cursor: text;
     background-color: var(--f-select-c-bg);
 
@@ -89,7 +88,7 @@
     transform: translateY(100%);
     padding: 8px 0;
     border: 1px solid var(--f-select-c-primary__light);
-    border-radius: 8px;
+    border-radius: var(--f-select-border-radius);
 
     @include opened(&) {
       display: block;
