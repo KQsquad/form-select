@@ -3,7 +3,11 @@ import FSelectUiMultiple from "./ui";
 import FSelectBase from "~/entities/select/model";
 import {FSelectUi} from "~/entities/select";
 
-class FSelectMultiple extends FSelectBase<FSelectUiMultiple> {
+interface Emits {
+    change: (string | number)[]
+}
+
+class FSelectMultiple extends FSelectBase<FSelectUiMultiple, Emits> {
     protected activeOption: FSelectOption[] = []
     protected readonly ui: FSelectUiMultiple
 
@@ -36,13 +40,14 @@ class FSelectMultiple extends FSelectBase<FSelectUiMultiple> {
         this.toggleActiveOption(option)
     }
 
-    get value() {
+    get value(): (string | number)[] {
         return this.activeOption.map(opt => opt.value)
     }
 
     set value(value: OptionConvertable | OptionConvertable[]) {
         this.activeOption = FSelectBase.fromConvertableOptions(value)
         this.ui.activeOption = this.activeOption
+        this.emitter.emit('change', this.value)
     }
 
     private findActiveOptionIdx(option: FSelectOption) {

@@ -2,7 +2,11 @@ import type { FSelectOption, FSelectProps, OptionConvertable } from "~/shared/ty
 import { FSelectBase } from '~/entities/select'
 import FSelectUiSingle from './ui';
 
-class FSelectSingle extends FSelectBase<FSelectUiSingle> {
+interface Emits {
+    change: number | string
+}
+
+class FSelectSingle extends FSelectBase<FSelectUiSingle, Emits> {
     protected activeOption: FSelectOption | null = null
     protected readonly ui: FSelectUiSingle
 
@@ -37,6 +41,7 @@ class FSelectSingle extends FSelectBase<FSelectUiSingle> {
     set value(value: OptionConvertable | null) {
         this.activeOption = FSelectBase.fromConvertableOption(value)
         this.ui.activeOption = this.activeOption
+        this.emitter.emit('change', this.value)
     }
 
     clear = () => {

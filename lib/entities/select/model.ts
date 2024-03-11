@@ -10,6 +10,7 @@ import type { AjaxParams } from '~/shared/ajax'
 import debounce from "lodash-es/debounce";
 import get from "lodash-es/get";
 import Ajax from "~/shared/ajax";
+import EventEmitter from "~/shared/eventEmitter";
 
 import {i18nMergeTranslations, Translation} from "~/shared/i18n";
 import type FSelectUi from './ui';
@@ -17,10 +18,14 @@ import {tryToNumber, tryTrim} from "~/shared/utils";
 
 type ExtractConstraints<T extends FSelectUi<any>> = T extends FSelectUi<infer A> ? A['activeOption'] : unknown
 
-abstract class FSelectBase<T extends FSelectUi<any>> {
+abstract class FSelectBase<T extends FSelectUi<any>, E extends {
+    [k: string]: any
+}> {
     protected options: FSelectOption[] = []
     protected nativeOptions: FSelectOption[]
     protected abstract activeOption: ExtractConstraints<T>
+
+    protected emitter: EventEmitter<E>
 
     protected abstract ui: T
 
@@ -36,6 +41,8 @@ abstract class FSelectBase<T extends FSelectUi<any>> {
 
         this.nativeOptions = FSelectBase.parseOptions(el)
         this.ajaxSettings = props?.ajax
+
+        this.emitter = new EventEmitter<E>()
 
         if (!props?.ajax) return
 

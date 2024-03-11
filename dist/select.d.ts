@@ -30,6 +30,14 @@ declare interface AjaxRequestConstraints {
     params?: AjaxParams;
 }
 
+declare interface Emits {
+    change: number | string;
+}
+
+declare interface Emits_2 {
+    change: (string | number)[];
+}
+
 declare type EmitterEvent<M extends EmitterEventMapI> = keyof M;
 
 declare type EmitterEventListener<M extends EmitterEventMapI, E extends EmitterEvent<M>> = (payload: M[E]) => void;
@@ -102,10 +110,13 @@ export declare type FSelectAjaxSettingsSearch = FSelectAjaxSettingsBase<'search'
     searchKey: string;
 }>;
 
-declare abstract class FSelectBase<T extends FSelectUi<any>> {
+declare abstract class FSelectBase<T extends FSelectUi<any>, E extends {
+    [k: string]: any;
+}> {
     protected options: FSelectOption[];
     protected nativeOptions: FSelectOption[];
     protected abstract activeOption: ExtractConstraints<T>;
+    protected emitter: EventEmitter<E>;
     protected abstract ui: T;
     readonly ajax?: Ajax;
     protected ajaxSearchId: number;
@@ -153,14 +164,14 @@ declare interface FSelectElements {
     area: HTMLDivElement;
 }
 
-export declare class FSelectMultiple extends FSelectBase<FSelectUiMultiple> {
+export declare class FSelectMultiple extends FSelectBase<FSelectUiMultiple, Emits_2> {
     protected activeOption: FSelectOption[];
     protected readonly ui: FSelectUiMultiple;
     constructor(el: HTMLSelectElement, props?: FSelectProps);
     protected initUi(): void;
     protected initValue(): void;
     protected onOptionClick: (option: FSelectOption) => void;
-    get value(): OptionConvertable | OptionConvertable[];
+    get value(): (string | number)[];
     set value(value: OptionConvertable | OptionConvertable[]);
     private findActiveOptionIdx;
     private toggleActiveOption;
@@ -187,7 +198,7 @@ export declare type FSelectProps = Partial<{
     ajax: FSelectAjaxSettings;
 }>;
 
-export declare class FSelectSingle extends FSelectBase<FSelectUiSingle> {
+export declare class FSelectSingle extends FSelectBase<FSelectUiSingle, Emits> {
     protected activeOption: FSelectOption | null;
     protected readonly ui: FSelectUiSingle;
     constructor(el: HTMLSelectElement, props?: FSelectProps);
