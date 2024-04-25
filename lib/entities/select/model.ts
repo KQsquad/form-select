@@ -79,6 +79,9 @@ abstract class FSelectBase<T extends FSelectUi<any>, E extends {
                 this.ui.options = this.options
                 break
             case 'search':
+                this.options = []
+                this.requestFetchModeOptions().catch(console.error)
+                break
             default:
                 break
         }
@@ -108,15 +111,17 @@ abstract class FSelectBase<T extends FSelectUi<any>, E extends {
     }
 
     protected onAjaxSearch = (s: string) => {
-        if (s) {
-            this.ajaxSearchDebounced(s).catch(console.error)
-            return
-        }
+        // if (s) {
+        //     this.ajaxSearchDebounced(s).catch(console.error)
+        //     return
+        // }
+
+        this.ajaxSearchDebounced(s).catch(console.error)
 
         this.ajaxSearchId += 1
         this.ui.isLoading = false
-        this.options = []
-        this.ui.options = []
+        // this.options = []
+        // this.ui.options = []
     }
 
 
@@ -130,10 +135,10 @@ abstract class FSelectBase<T extends FSelectUi<any>, E extends {
             [this.ajaxSearchKey()]: s
         })
 
-        if (id !== this.ajaxSearchId) {
-            this.ui.updateHint()
-            return
-        }
+        // if (id !== this.ajaxSearchId) {
+        //     this.ui.updateHint()
+        //     return
+        // }
 
         this.ui.isLoading = false
 
