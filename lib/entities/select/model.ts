@@ -22,6 +22,7 @@ abstract class FSelectBase<T extends FSelectUi<any>, E extends {
     [k: string]: any
 }> {
     protected options: FSelectOption[] = []
+    protected firstFetchedOptions: FSelectOption[] = []
     protected nativeOptions: FSelectOption[]
     protected abstract activeOption: ExtractConstraints<T>
 
@@ -71,6 +72,7 @@ abstract class FSelectBase<T extends FSelectUi<any>, E extends {
     protected resolveInitOptions(el: HTMLSelectElement) {
         switch (this.ajaxSettings?.mode) {
             case 'fetch':
+            case 'search':
                 this.options = []
                 this.requestFetchModeOptions().catch(console.error)
                 break
@@ -78,7 +80,6 @@ abstract class FSelectBase<T extends FSelectUi<any>, E extends {
                 this.options = this.nativeOptions
                 this.ui.options = this.options
                 break
-            case 'search':
             default:
                 break
         }
@@ -91,6 +92,7 @@ abstract class FSelectBase<T extends FSelectUi<any>, E extends {
 
         this.ui.isLoading = false
 
+        this.firstFetchedOptions = options
         this.options = options
         this.ui.options = options
     }
@@ -115,8 +117,8 @@ abstract class FSelectBase<T extends FSelectUi<any>, E extends {
 
         this.ajaxSearchId += 1
         this.ui.isLoading = false
-        this.options = []
-        this.ui.options = []
+        this.options = this.firstFetchedOptions
+        this.ui.options = this.firstFetchedOptions
     }
 
 
