@@ -114,6 +114,7 @@ declare abstract class FSelectBase<T extends FSelectUi<any>, E extends {
     [k: string]: any;
 }> {
     protected options: FSelectOption[];
+    protected firstFetchedOptions: FSelectOption[];
     protected nativeOptions: FSelectOption[];
     protected abstract activeOption: ExtractConstraints<T>;
     protected emitter: EventEmitter<E>;

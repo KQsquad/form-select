@@ -1162,6 +1162,7 @@ function Gi(t, e) {
 const C = class C {
   constructor(e, r) {
     c(this, "options", []);
+    c(this, "firstFetchedOptions", []);
     c(this, "nativeOptions");
     c(this, "emitter");
     c(this, "ajax");
@@ -1174,7 +1175,7 @@ const C = class C {
         this.ajaxSearchDebounced(e).catch(console.error);
         return;
       }
-      this.ajaxSearchId += 1, this.ui.isLoading = !1, this.options = [], this.ui.options = [];
+      this.ajaxSearchId += 1, this.ui.isLoading = !1, this.options = this.firstFetchedOptions, this.ui.options = this.firstFetchedOptions;
     });
     c(this, "ajaxSearch", async (e) => {
       this.ajaxSearchId += 1;
@@ -1213,6 +1214,7 @@ const C = class C {
     var r;
     switch ((r = this.ajaxSettings) == null ? void 0 : r.mode) {
       case "fetch":
+      case "search":
         this.options = [], this.requestFetchModeOptions().catch(console.error);
         break;
       case void 0:
@@ -1223,7 +1225,7 @@ const C = class C {
   async requestFetchModeOptions() {
     this.ui.isLoading = !0;
     const e = await this.requestOptions();
-    this.ui.isLoading = !1, this.options = e, this.ui.options = e;
+    this.ui.isLoading = !1, this.firstFetchedOptions = e, this.options = e, this.ui.options = e;
   }
   initUi() {
     this.ui.options = this.options, this.ui.activeOption = this.activeOption, this.ui.emitter.multiOn({
