@@ -97,6 +97,10 @@ abstract class FSelectBase<T extends FSelectUi<any>, E extends {
         this.ui.options = options
     }
 
+    reFetchOptions() {
+        return this.ajax ? this.requestFetchModeOptions() : Promise.resolve()
+    }
+
     protected initUi() {
         this.ui.options = this.options
         this.ui.activeOption = this.activeOption
