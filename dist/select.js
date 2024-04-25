@@ -1227,6 +1227,9 @@ const C = class C {
     const e = await this.requestOptions();
     this.ui.isLoading = !1, this.firstFetchedOptions = e, this.options = e, this.ui.options = e;
   }
+  reFetchOptions() {
+    return this.ajax ? this.requestFetchModeOptions() : Promise.resolve();
+  }
   initUi() {
     this.ui.options = this.options, this.ui.activeOption = this.activeOption, this.ui.emitter.multiOn({
       clear: this.clear,

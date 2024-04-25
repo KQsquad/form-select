@@ -136,6 +136,7 @@ declare abstract class FSelectBase<T extends FSelectUi<any>, E extends {
     protected abstract initValue(): void;
     protected resolveInitOptions(el: HTMLSelectElement): void;
     protected requestFetchModeOptions(): Promise<void>;
+    reFetchOptions(): Promise<void>;
     protected initUi(): void;
     protected onAjaxSearch: (s: string) => void;
     protected ajaxSearch: (s: string) => Promise<void>;
