@@ -110,15 +110,19 @@ abstract class FSelectBase<T extends FSelectUi<any>, E extends {
     }
 
     protected onAjaxSearch = (s: string) => {
-        if (s) {
-            this.ajaxSearchDebounced(s).catch(console.error)
-            return
-        }
+        // if (s) {
+        //     this.ajaxSearchDebounced(s).catch(console.error)
+        //     return
+        // }
 
-        this.ajaxSearchId += 1
-        this.ui.isLoading = false
-        this.options = this.firstFetchedOptions
-        this.ui.options = this.firstFetchedOptions
+        this.ajaxSearchDebounced(s).catch(console.error).then(() => {
+            this.ajaxSearchId += 1
+            this.ui.isLoading = false
+        })
+
+        
+        // this.options = this.firstFetchedOptions
+        // this.ui.options = this.firstFetchedOptions
     }
 
 
