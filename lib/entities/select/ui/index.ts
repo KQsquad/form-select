@@ -206,7 +206,9 @@ abstract class FSelectUi<T extends FSelectUiConstraints> {
 
     protected set searchValue(value: string) {
         this.elements.search.value = value
-        this.emitSearch()
+        if (this.isOpen) {
+            this.emitSearch()
+        }
     }
 
     protected get needRender() {
@@ -349,6 +351,9 @@ abstract class FSelectUi<T extends FSelectUiConstraints> {
     protected onOpened() {
         this.elements.search.focus()
         this.renderOptionEls()
+        if (this.isAjaxSearch) {
+            this.emitter.emit('ajaxSearch', this.searchValue)
+        }
     }
 
     protected onClosed() {
